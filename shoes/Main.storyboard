@@ -41,8 +41,8 @@
                                     <constraint firstItem="xro-en-eYP" firstAttribute="top" secondItem="pc1-6Y-jXb" secondAttribute="bottom" constant="8" symbolic="YES" id="wmK-dM-K0X"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KHG-35-DF1">
-                                <rect key="frame" x="20" y="122" width="264" height="350"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KHG-35-DF1">
+                                <rect key="frame" x="20" y="125" width="260" height="340"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="짚신" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9J-Iq-UeO">
                                 <rect key="frame" x="303" y="282.66666666666669" width="42" height="29"/>
@@ -86,39 +86,66 @@
                                     <constraint firstAttribute="bottom" secondItem="t2p-ca-gqD" secondAttribute="bottom" constant="4" id="qvM-zE-Gca"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jz-Ie-vOg">
+                                <rect key="frame" x="51" y="659" width="73" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="강화하기"/>
+                                <connections>
+                                    <action selector="tapUpgradeButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="2Iq-B5-dQl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lqa-Iw-tUw">
+                                <rect key="frame" x="304" y="659" width="73" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="판매하기"/>
+                                <connections>
+                                    <action selector="tapSellButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kre-bx-voA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="d9J-Iq-UeO" firstAttribute="top" secondItem="hf4-MQ-GbL" secondAttribute="bottom" constant="132" id="5N6-jU-W9F"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Lqa-Iw-tUw" secondAttribute="bottom" constant="202" id="7g5-1V-zHT"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="AUq-uv-PkM" secondAttribute="trailing" constant="144" id="HkV-8U-EB6"/>
                             <constraint firstItem="AUq-uv-PkM" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="KHy-EA-OCr"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Xbt-cS-GdR" secondAttribute="trailing" constant="108" id="NJE-8S-7xK"/>
                             <constraint firstItem="tqd-0e-MGq" firstAttribute="top" secondItem="d9J-Iq-UeO" secondAttribute="bottom" constant="131" id="QhB-ck-PxZ"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="KHG-35-DF1" secondAttribute="bottom" constant="420" id="Sop-Yn-k8q"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="KHG-35-DF1" secondAttribute="bottom" constant="425" id="Sop-Yn-k8q"/>
                             <constraint firstItem="Xbt-cS-GdR" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="YTD-vg-e1N"/>
-                            <constraint firstItem="tqd-0e-MGq" firstAttribute="bottom" secondItem="KHG-35-DF1" secondAttribute="bottom" id="YnA-6v-FfA"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="144" id="ZfF-z6-MeL"/>
+                            <constraint firstItem="tqd-0e-MGq" firstAttribute="bottom" secondItem="KHG-35-DF1" secondAttribute="bottom" constant="5" id="YnA-6v-FfA"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="148" id="ZfF-z6-MeL"/>
                             <constraint firstItem="KHG-35-DF1" firstAttribute="top" secondItem="Xbt-cS-GdR" secondAttribute="bottom" constant="8" id="Zs3-e3-JZl"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="2jz-Ie-vOg" secondAttribute="bottom" constant="202" id="f7t-sh-AVg"/>
+                            <constraint firstItem="2jz-Ie-vOg" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="51" id="gWy-9x-IHk"/>
                             <constraint firstItem="KHG-35-DF1" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="gjf-CJ-xjY"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="AUq-uv-PkM" secondAttribute="bottom" constant="357" id="j8D-M9-lGJ"/>
                             <constraint firstItem="hf4-MQ-GbL" firstAttribute="top" secondItem="KHG-35-DF1" secondAttribute="top" id="jVz-rm-hvg"/>
+                            <constraint firstItem="Lqa-Iw-tUw" firstAttribute="top" secondItem="2jz-Ie-vOg" secondAttribute="bottom" constant="-31" id="n8D-h2-SGk"/>
                             <constraint firstItem="Xbt-cS-GdR" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="oLo-3e-2Fh"/>
-                            <constraint firstItem="d9J-Iq-UeO" firstAttribute="leading" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="19" id="qCv-C3-WkB"/>
-                            <constraint firstItem="AUq-uv-PkM" firstAttribute="top" secondItem="KHG-35-DF1" secondAttribute="bottom" constant="8" symbolic="YES" id="qxg-fI-oOD"/>
-                            <constraint firstItem="d9J-Iq-UeO" firstAttribute="centerY" secondItem="KHG-35-DF1" secondAttribute="centerY" id="tWz-dH-YmQ"/>
-                            <constraint firstItem="hf4-MQ-GbL" firstAttribute="leading" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="19" id="wVu-Sj-AfL"/>
+                            <constraint firstItem="d9J-Iq-UeO" firstAttribute="leading" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="23" id="qCv-C3-WkB"/>
+                            <constraint firstItem="AUq-uv-PkM" firstAttribute="top" secondItem="KHG-35-DF1" secondAttribute="bottom" constant="13" id="qxg-fI-oOD"/>
+                            <constraint firstItem="d9J-Iq-UeO" firstAttribute="centerY" secondItem="KHG-35-DF1" secondAttribute="centerY" constant="2.6666666666666856" id="tWz-dH-YmQ"/>
+                            <constraint firstItem="hf4-MQ-GbL" firstAttribute="leading" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="23" id="wVu-Sj-AfL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Xbt-cS-GdR" secondAttribute="bottom" constant="778" id="xkW-W6-3Tw"/>
-                            <constraint firstItem="tqd-0e-MGq" firstAttribute="leading" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="19" id="xo9-eC-2t3"/>
+                            <constraint firstItem="tqd-0e-MGq" firstAttribute="leading" secondItem="KHG-35-DF1" secondAttribute="trailing" constant="23" id="xo9-eC-2t3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Lqa-Iw-tUw" secondAttribute="trailing" constant="51" id="zMH-Ka-t7e"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="CurrentDiamondLabel" destination="xro-en-eYP" id="Xoi-rI-fgD"/>
+                        <outlet property="CurrentMoneyLabel" destination="pc1-6Y-jXb" id="Tcl-lh-hoM"/>
                         <outlet property="CurrentStatusView" destination="Xbt-cS-GdR" id="frG-A7-b4L"/>
-                        <outlet property="LavelLabel" destination="hf4-MQ-GbL" id="Myf-qQ-T8Y"/>
-                        <outlet property="PriceLabel" destination="AUq-uv-PkM" id="rDl-z7-ajb"/>
+                        <outlet property="LevelLabel" destination="hf4-MQ-GbL" id="HIN-CS-E86"/>
+                        <outlet property="PriceView" destination="AUq-uv-PkM" id="fWe-FU-Mwt"/>
                         <outlet property="ProbablityLabel" destination="tqd-0e-MGq" id="3xJ-PU-o4z"/>
+                        <outlet property="SellButton" destination="Lqa-Iw-tUw" id="Fs3-qM-uW2"/>
                         <outlet property="ShoesImageView" destination="KHG-35-DF1" id="4fu-eV-6Re"/>
                         <outlet property="ShoesNameLabel" destination="d9J-Iq-UeO" id="32w-yA-LKl"/>
+                        <outlet property="ShoesPriceLabel" destination="3zt-gw-ebc" id="Q0c-w6-DFZ"/>
+                        <outlet property="UpgradeButton" destination="2jz-Ie-vOg" id="CtN-t1-Rw1"/>
+                        <outlet property="UpgradeCostLabel" destination="t2p-ca-gqD" id="cgM-ED-3E7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -127,6 +154,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pencil" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
