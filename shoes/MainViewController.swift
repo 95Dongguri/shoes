@@ -22,11 +22,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var UpgradeButton: UIButton!
     @IBOutlet weak var SellButton: UIButton!
     
-    var currentMoney = 10000
-    var currentDiamond = 0
-    var shoesPrice = 2
-    var upgradeProbablity = 100
-    var upgradeCost = 1
+    var currentMoney: UInt = 5
+    var currentDiamond: UInt = 0
+    var shoesPrice: UInt = 2
+    var upgradeProbablity: UInt = 100
+    var upgradeCost: UInt = 1
     var level = 1
     
     let shoes = ["맨발", "짚신", "고무신", "슬리퍼", "크록스", "샌들"]
@@ -76,7 +76,7 @@ class MainViewController: UIViewController {
          */
         
         let probablity = Float.random(in: 0...1) * 100
-                
+        
         if level == 1 {
             upgrade()
             
@@ -131,14 +131,40 @@ class MainViewController: UIViewController {
             }
         }
         
+        UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
+        
         print(probablity)
     }
     
     @IBAction func tapSellButton(_ sender: Any) {
-        currentMoney += shoesPrice
+        currentMoney += UInt(shoesPrice)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
+        UpgradeButton.isEnabled = true
         
         reset()
+    }
+}
+
+private extension MainViewController {
+    func upgrade() {
+        level += 1
+        currentMoney -= UInt(upgradeCost)
+        shoesPrice *= 4
+        upgradeCost *= 2
+        
+        CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
+        CurrentDiamondLabel.text = "다이아: \(currentDiamond)"
+        LevelLabel.text = "레벨: \(level)"
+        ShoesNameLabel.text = shoes[level - 1]
+        ShoesPriceLabel.text = "가격: \(shoesPrice)"
+        UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
+        
+        SellButton.isEnabled = true
+    }
+    
+    func fail() {
+        currentMoney -= UInt(upgradeCost)
+        CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
     }
     
     func reset() {
@@ -153,43 +179,43 @@ class MainViewController: UIViewController {
         ShoesNameLabel.text = shoes[level - 1]
     }
     
-    func upgrade() {
-        level += 1
-        currentMoney -= upgradeCost
-        shoesPrice *= 4
-        upgradeCost *= 2
-        
+    func retry() {
+        currentMoney -= UInt((shoesPrice / 3))
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
-        CurrentDiamondLabel.text = "다이아: \(currentDiamond)"
-        LevelLabel.text = "레벨: \(level)"
-        ShoesNameLabel.text = shoes[level - 1]
-        ShoesPriceLabel.text = "가격: \(shoesPrice)"
-        UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
         
-        SellButton.isEnabled = true
-    }
-    
-    func sellButtonisEnabled() {
-        SellButton.isEnabled = false
-    }
-    
-    func fail() {
-        currentMoney -= upgradeCost
-        CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
+        UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
     }
     
     func alert() {
-        let alert = UIAlertController(title: "실패 😭", message: "강화를 실패했습니다.", preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "실패 😭",
+            message: """
+            강화를 실패했습니다.
+            재시도 비용 \(shoesPrice / 3)원.
+            """,
+            preferredStyle: .alert
+        )
         
         let resetAction = UIAlertAction(title: "처음으로", style: .cancel) { _ in
             self.reset()
+            self.SellButton.isEnabled = true
         }
         let retryAction = UIAlertAction(title: "재시도", style: .default) { _ in
-            self.sellButtonisEnabled()
+            self.retry()
+            self.SellButton.isEnabled = false
         }
         
         [resetAction, retryAction].forEach { alert.addAction($0) }
         
-        present(alert, animated: true)
+        present(alert, animated: true) {
+            let retryCost = self.shoesPrice / 3
+            
+            /*
+             재시도 비용 > 남은 돈 이거나 강화비용 > (남은 돈 - 재시도 비용) 이면 재시도버튼 비활성화
+             */
+            if retryCost > self.currentMoney || self.upgradeCost > (self.currentMoney - retryCost) {
+                retryAction.isEnabled = false
+            }
+        }
     }
 }
