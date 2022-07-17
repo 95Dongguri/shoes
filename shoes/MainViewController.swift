@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var CurrentStatusView: UIView!
     @IBOutlet weak var CurrentMoneyLabel: UILabel!
     @IBOutlet weak var CurrentDiamondLabel: UILabel!
+    @IBOutlet weak var GetMoneyButton: UIButton!
     @IBOutlet weak var ShoesImageView: UIImageView!
     @IBOutlet weak var LevelLabel: UILabel!
     @IBOutlet weak var ShoesNameLabel: UILabel!
@@ -42,6 +43,20 @@ class MainViewController: UIViewController {
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
         ShoesNameLabel.text = shoes[0]
     }
+    
+    @IBAction func tapGetMoneyButton(_ sender: Any) {
+//        currentMoney += 1000
+//        CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
+        
+        if currentDiamond > 0 {
+            currentDiamond -= 1
+            currentMoney += 1000
+            CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
+        }
+        
+        upgradeButtonToggle()
+    }
+    
 
     @IBAction func tapUpgradeButton(_ sender: Any) {
         /*
@@ -131,7 +146,7 @@ class MainViewController: UIViewController {
             }
         }
         
-        UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
+        upgradeButtonToggle()
         
         print(probablity)
     }
@@ -177,13 +192,15 @@ private extension MainViewController {
         UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
         ShoesNameLabel.text = shoes[level - 1]
+        
+        upgradeButtonToggle()
     }
     
     func retry() {
         currentMoney -= UInt((shoesPrice / 3))
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         
-        UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
+        upgradeButtonToggle()
     }
     
     func alert() {
@@ -217,5 +234,9 @@ private extension MainViewController {
                 retryAction.isEnabled = false
             }
         }
+    }
+    
+    func upgradeButtonToggle() {
+        UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
     }
 }
