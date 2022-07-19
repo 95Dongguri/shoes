@@ -46,12 +46,19 @@ class MainViewController: UIViewController {
         UpgradeCostLabel.text = "강화비용: \(statusData[0].upgradeCost)"
         ProbablityLabel.text = "확률: \(statusData[0].upgradeProbablity)%"
         ShoesNameLabel.text = shoes[level - 1]
+        
+        currentMoney = statusData[0].currentMoney
+        currentDiamond = statusData[0].currentDiamond
+        level = statusData[0].level
+        shoesPrice = statusData[0].shoesPrice
+        upgradeCost = statusData[0].upgradeCost
+        upgradeProbablity = statusData[0].upgradeProbablity
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        myData()
+        saveData()
     }
     
     @IBAction func tapGetMoneyButton(_ sender: Any) {
@@ -64,7 +71,7 @@ class MainViewController: UIViewController {
             CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         }
         
-        myData()
+        saveData()
         upgradeButtonToggle()
     }
     
@@ -158,7 +165,7 @@ class MainViewController: UIViewController {
         }
         
         upgradeButtonToggle()
-        myData()
+        saveData()
         
         print(probablity)
     }
@@ -167,7 +174,7 @@ class MainViewController: UIViewController {
         currentMoney += UInt(shoesPrice)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         UpgradeButton.isEnabled = true
-        myData()
+        saveData()
         
         reset()
     }
@@ -187,7 +194,7 @@ private extension MainViewController {
         ShoesPriceLabel.text = "가격: \(shoesPrice)"
         UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
         
-        myData()
+        saveData()
         
         SellButton.isEnabled = true
     }
@@ -196,7 +203,7 @@ private extension MainViewController {
         currentMoney -= UInt(upgradeCost)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         
-        myData()
+        saveData()
     }
     
     func reset() {
@@ -210,8 +217,7 @@ private extension MainViewController {
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
         ShoesNameLabel.text = shoes[level - 1]
         
-        myData()
-        
+        saveData()
         upgradeButtonToggle()
     }
     
@@ -219,8 +225,7 @@ private extension MainViewController {
         currentMoney -= UInt((shoesPrice / 3))
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         
-        myData()
-        
+        saveData()
         upgradeButtonToggle()
     }
     
@@ -261,7 +266,7 @@ private extension MainViewController {
         UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
     }
     
-    func myData() {
+    func saveData() {
         let currentData = StatusData(currentMoney: currentMoney, currentDiamond: currentDiamond, shoesPrice: shoesPrice, upgradeProbablity: upgradeProbablity, upgradeCost: upgradeCost, level: level, shoes: shoes[level - 1])
         
         UserDefaults.standard.statusdata = [currentData]
