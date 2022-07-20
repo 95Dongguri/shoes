@@ -22,6 +22,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var PriceView: UIView!
     @IBOutlet weak var ShoesPriceLabel: UILabel!
     @IBOutlet weak var UpgradeCostLabel: UILabel!
+    @IBOutlet weak var Plus5Item: UIButton!
+    @IBOutlet weak var Plus10Item: UIButton!
+    @IBOutlet weak var Plus15Item: UIButton!
     @IBOutlet weak var UpgradeButton: UIButton!
     @IBOutlet weak var SellButton: UIButton!
     
@@ -71,7 +74,6 @@ class MainViewController: UIViewController {
             CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         }
         
-        saveData()
         upgradeButtonToggle()
     }
     
@@ -165,7 +167,6 @@ class MainViewController: UIViewController {
         }
         
         upgradeButtonToggle()
-        saveData()
         
         print(probablity)
     }
@@ -174,7 +175,6 @@ class MainViewController: UIViewController {
         currentMoney += UInt(shoesPrice)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         UpgradeButton.isEnabled = true
-        saveData()
         
         reset()
     }
@@ -193,17 +193,13 @@ private extension MainViewController {
         ShoesNameLabel.text = shoes[level - 1]
         ShoesPriceLabel.text = "가격: \(shoesPrice)"
         UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
-        
-        saveData()
-        
+                
         SellButton.isEnabled = true
     }
     
     func fail() {
         currentMoney -= UInt(upgradeCost)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
-        
-        saveData()
     }
     
     func reset() {
@@ -217,7 +213,6 @@ private extension MainViewController {
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
         ShoesNameLabel.text = shoes[level - 1]
         
-        saveData()
         upgradeButtonToggle()
     }
     
@@ -226,6 +221,7 @@ private extension MainViewController {
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         
         saveData()
+        
         upgradeButtonToggle()
     }
     
