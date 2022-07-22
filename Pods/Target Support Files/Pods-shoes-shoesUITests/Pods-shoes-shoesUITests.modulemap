@@ -1,0 +1,6 @@
+framework module Pods_shoes_shoesUITests {
+  umbrella header "Pods-shoes-shoesUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

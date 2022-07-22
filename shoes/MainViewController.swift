@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class MainViewController: UIViewController {
     
     private var status: [Status] = []
+    private var diamondRewardedAd = DiamondRewardedAd()
     
     @IBOutlet weak var CurrentStatusView: UIView!
     @IBOutlet weak var CurrentMoneyLabel: UILabel!
@@ -22,13 +24,14 @@ class MainViewController: UIViewController {
     @IBOutlet weak var PriceView: UIView!
     @IBOutlet weak var ShoesPriceLabel: UILabel!
     @IBOutlet weak var UpgradeCostLabel: UILabel!
+    @IBOutlet weak var GetDiamondButton: UIButton!
     @IBOutlet weak var Plus5Item: UIButton!
     @IBOutlet weak var Plus10Item: UIButton!
     @IBOutlet weak var Plus15Item: UIButton!
     @IBOutlet weak var UpgradeButton: UIButton!
     @IBOutlet weak var SellButton: UIButton!
     
-    var currentMoney: UInt = 100
+    var currentMoney: UInt = 1000
     var currentDiamond: UInt = 0
     var shoesPrice: UInt = 2
     var upgradeProbablity: UInt = 100
@@ -40,6 +43,8 @@ class MainViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        diamondRewardedAd.loadRewardedAd()
         
         status = UserDefaults.standard.status
 
@@ -60,17 +65,15 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
         saveData()
     }
     
     @IBAction func tapGetMoneyButton(_ sender: Any) {
-//        currentMoney += 1000
-//        CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
-        
         if currentDiamond > 0 {
             currentDiamond -= 1
+            CurrentDiamondLabel.text = "다이아: \(currentDiamond)"
             currentMoney += 1000
             CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         }
@@ -172,6 +175,14 @@ class MainViewController: UIViewController {
         print(probablity)
     }
     
+    @IBAction func tapGetDiamondButton(_ sender: Any) {
+        diamondRewardedAd.showRewardedAd(vc: self)
+        
+        currentDiamond += 10
+        CurrentDiamondLabel.text = "다이아: \(currentDiamond)"
+    }
+    
+    
     @IBAction func tapSellButton(_ sender: Any) {
         currentMoney += UInt(shoesPrice)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
@@ -184,6 +195,7 @@ class MainViewController: UIViewController {
         ProbablityLabel.textColor = .systemRed
         currentProbablity = upgradeProbablity
         itemEnabled(false)
+        SellButton.isEnabled = false
         
         upgradeProbablity += 5
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
@@ -193,6 +205,7 @@ class MainViewController: UIViewController {
         ProbablityLabel.textColor = .systemRed
         currentProbablity = upgradeProbablity
         itemEnabled(false)
+        SellButton.isEnabled = false
 
         upgradeProbablity += 10
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
@@ -202,6 +215,7 @@ class MainViewController: UIViewController {
         ProbablityLabel.textColor = .systemRed
         currentProbablity = upgradeProbablity
         itemEnabled(false)
+        SellButton.isEnabled = false
 
         upgradeProbablity += 15
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
@@ -257,10 +271,10 @@ private extension MainViewController {
     }
     
     func retry() {
-        upgradeProbablity = currentProbablity
+//        upgradeProbablity = currentProbablity
         currentMoney -= UInt((shoesPrice / 3))
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
-        ProbablityLabel.text = "확률: \(upgradeProbablity)%"
+        ProbablityLabel.text = "확률: \(currentProbablity)%"
         ProbablityLabel.textColor = .label
 
         saveData()
@@ -283,6 +297,7 @@ private extension MainViewController {
             self.reset()
             self.SellButton.isEnabled = true
         }
+        
         let retryAction = UIAlertAction(title: "재시도", style: .default) { _ in
             self.retry()
             self.SellButton.isEnabled = false
