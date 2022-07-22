@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StatusData: Codable {
+struct Status: Codable {
     var currentMoney: UInt
     var currentDiamond: UInt
     var shoesPrice: UInt

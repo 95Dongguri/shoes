@@ -9,7 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    private var statusData: [StatusData] = []
+    private var status: [Status] = []
     
     @IBOutlet weak var CurrentStatusView: UIView!
     @IBOutlet weak var CurrentMoneyLabel: UILabel!
@@ -28,10 +28,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var UpgradeButton: UIButton!
     @IBOutlet weak var SellButton: UIButton!
     
-    var currentMoney: UInt = 5
+    var currentMoney: UInt = 100
     var currentDiamond: UInt = 0
     var shoesPrice: UInt = 2
     var upgradeProbablity: UInt = 100
+    var currentProbablity: UInt = 100
     var upgradeCost: UInt = 1
     var level = 1
     
@@ -40,26 +41,26 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        statusData = UserDefaults.standard.statusdata
+        status = UserDefaults.standard.status
 
-        CurrentMoneyLabel.text = "남은 돈: \(statusData[0].currentMoney)"
-        CurrentDiamondLabel.text = "다이아: \(statusData[0].currentDiamond)"
-        LevelLabel.text = "레벨: \(statusData[0].level)"
-        ShoesPriceLabel.text = "가격: \(statusData[0].shoesPrice)"
-        UpgradeCostLabel.text = "강화비용: \(statusData[0].upgradeCost)"
-        ProbablityLabel.text = "확률: \(statusData[0].upgradeProbablity)%"
+        CurrentMoneyLabel.text = "남은 돈: \(status[0].currentMoney)"
+        CurrentDiamondLabel.text = "다이아: \(status[0].currentDiamond)"
+        LevelLabel.text = "레벨: \(status[0].level)"
+        ShoesPriceLabel.text = "가격: \(status[0].shoesPrice)"
+        UpgradeCostLabel.text = "강화비용: \(status[0].upgradeCost)"
+        ProbablityLabel.text = "확률: \(status[0].upgradeProbablity)%"
         ShoesNameLabel.text = shoes[level - 1]
         
-        currentMoney = statusData[0].currentMoney
-        currentDiamond = statusData[0].currentDiamond
-        level = statusData[0].level
-        shoesPrice = statusData[0].shoesPrice
-        upgradeCost = statusData[0].upgradeCost
-        upgradeProbablity = statusData[0].upgradeProbablity
+        currentMoney = status[0].currentMoney
+        currentDiamond = status[0].currentDiamond
+        level = status[0].level
+        shoesPrice = status[0].shoesPrice
+        upgradeCost = status[0].upgradeCost
+        upgradeProbablity = status[0].upgradeProbablity
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        super.viewWillDisappear(true)
         
         saveData()
     }
@@ -118,7 +119,7 @@ class MainViewController: UIViewController {
             upgradeProbablity = 60
             ProbablityLabel.text = "확률: \(upgradeProbablity)%"
         } else if level == 2 { // 96 %
-            if probablity > Float(upgradeProbablity) {
+            if probablity < Float(upgradeProbablity) {
                 upgrade()
                 
                 upgradeProbablity = 55
@@ -128,7 +129,7 @@ class MainViewController: UIViewController {
                 alert()
             }
         } else if level == 3 {
-            if probablity > Float(upgradeProbablity) {
+            if probablity < Float(upgradeProbablity) {
                 upgrade()
                 
                 upgradeProbablity = 50
@@ -138,7 +139,7 @@ class MainViewController: UIViewController {
                 alert()
             }
         } else if level == 4 {
-            if probablity > Float(upgradeProbablity) {
+            if probablity < Float(upgradeProbablity) {
                 upgrade()
                 
                 upgradeProbablity = 45
@@ -148,7 +149,7 @@ class MainViewController: UIViewController {
                 alert()
             }
         } else if level == 5 {
-            if probablity > Float(upgradeProbablity) {
+            if probablity < Float(upgradeProbablity) {
                 upgrade()
                 
                 upgradeProbablity = 40
@@ -158,7 +159,7 @@ class MainViewController: UIViewController {
                 alert()
             }
         } else if level == 6 {
-            if probablity > Float(upgradeProbablity) {
+            if probablity < Float(upgradeProbablity) {
                 upgrade()
             } else {
                 fail()
@@ -178,6 +179,33 @@ class MainViewController: UIViewController {
         
         reset()
     }
+    
+    @IBAction func tapPlus5Button(_ sender: Any) {
+        ProbablityLabel.textColor = .systemRed
+        currentProbablity = upgradeProbablity
+        itemEnabled(false)
+        
+        upgradeProbablity += 5
+        ProbablityLabel.text = "확률: \(upgradeProbablity)%"
+    }
+    
+    @IBAction func tapPlus10Button(_ sender: Any) {
+        ProbablityLabel.textColor = .systemRed
+        currentProbablity = upgradeProbablity
+        itemEnabled(false)
+
+        upgradeProbablity += 10
+        ProbablityLabel.text = "확률: \(upgradeProbablity)%"
+    }
+
+    @IBAction func tapPlus15Button(_ sender: Any) {
+        ProbablityLabel.textColor = .systemRed
+        currentProbablity = upgradeProbablity
+        itemEnabled(false)
+
+        upgradeProbablity += 15
+        ProbablityLabel.text = "확률: \(upgradeProbablity)%"
+    }
 }
 
 private extension MainViewController {
@@ -186,6 +214,7 @@ private extension MainViewController {
         currentMoney -= UInt(upgradeCost)
         shoesPrice *= 4
         upgradeCost *= 2
+        upgradeProbablity = currentProbablity
         
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
         CurrentDiamondLabel.text = "다이아: \(currentDiamond)"
@@ -195,11 +224,17 @@ private extension MainViewController {
         UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
                 
         SellButton.isEnabled = true
+        ProbablityLabel.textColor = .label
+        itemEnabled(true)
     }
     
     func fail() {
         currentMoney -= UInt(upgradeCost)
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
+        ProbablityLabel.text = "확률: \(upgradeProbablity)%"
+        upgradeProbablity = currentProbablity
+        
+        itemEnabled(true)
     }
     
     func reset() {
@@ -207,22 +242,31 @@ private extension MainViewController {
         upgradeProbablity = 100
         upgradeCost = 1
         level = 1
+        currentProbablity = upgradeProbablity
+        
         LevelLabel.text = "레벨: \(level)"
         ShoesPriceLabel.text = "가격: \(shoesPrice)"
         UpgradeCostLabel.text = "강화비용: \(upgradeCost)"
         ProbablityLabel.text = "확률: \(upgradeProbablity)%"
         ShoesNameLabel.text = shoes[level - 1]
         
+        ProbablityLabel.textColor = .label
+
         upgradeButtonToggle()
+        itemEnabled(true)
     }
     
     func retry() {
+        upgradeProbablity = currentProbablity
         currentMoney -= UInt((shoesPrice / 3))
         CurrentMoneyLabel.text = "남은 돈: \(currentMoney)"
-        
+        ProbablityLabel.text = "확률: \(upgradeProbablity)%"
+        ProbablityLabel.textColor = .label
+
         saveData()
         
         upgradeButtonToggle()
+        itemEnabled(true)
     }
     
     func alert() {
@@ -258,13 +302,23 @@ private extension MainViewController {
         }
     }
     
+    func itemEnabled(_ bool: Bool) {
+        [Plus5Item, Plus10Item, Plus15Item].forEach { $0?.isEnabled = bool }
+    }
+    
     func upgradeButtonToggle() {
-        UpgradeButton.isEnabled = currentMoney < upgradeCost ? false : true
+        if currentMoney < upgradeCost {
+            UpgradeButton.isEnabled = false
+            itemEnabled(false)
+        } else {
+            UpgradeButton.isEnabled = true
+            itemEnabled(true)
+        }
     }
     
     func saveData() {
-        let currentData = StatusData(currentMoney: currentMoney, currentDiamond: currentDiamond, shoesPrice: shoesPrice, upgradeProbablity: upgradeProbablity, upgradeCost: upgradeCost, level: level, shoes: shoes[level - 1])
+        let currentData = Status(currentMoney: currentMoney, currentDiamond: currentDiamond, shoesPrice: shoesPrice, upgradeProbablity: upgradeProbablity, upgradeCost: upgradeCost, level: level, shoes: shoes[level - 1])
         
-        UserDefaults.standard.statusdata = [currentData]
+        UserDefaults.standard.status = [currentData]
     }
 }

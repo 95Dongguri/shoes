@@ -9,19 +9,19 @@ import Foundation
 
 extension UserDefaults {
     enum Key: String {
-        case statusdata
+        case status
     }
     
-    var statusdata: [StatusData] {
+    var status: [Status] {
         get {
-            guard let data = UserDefaults.standard.data(forKey: Key.statusdata.rawValue) else { return [] }
+            guard let data = UserDefaults.standard.data(forKey: Key.status.rawValue) else { return [] }
             
-            return (try? PropertyListDecoder().decode([StatusData].self, from: data)) ?? []
+            return (try? PropertyListDecoder().decode([Status].self, from: data)) ?? []
         }
         set {
             UserDefaults.standard.setValue(
                 try? PropertyListEncoder().encode(newValue),
-                forKey: Key.statusdata.rawValue)
+                forKey: Key.status.rawValue)
         }
     }
 }

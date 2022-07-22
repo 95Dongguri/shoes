@@ -140,6 +140,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="+5%"/>
+                                <connections>
+                                    <action selector="tapPlus5Button:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Iew-zO-FLo"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MFe-9I-EyY">
                                 <rect key="frame" x="179" y="514" width="70" height="70"/>
@@ -149,6 +152,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="+10%"/>
+                                <connections>
+                                    <action selector="tapPlus10Button:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="cXU-wk-V6g"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dv3-fU-VjY">
                                 <rect key="frame" x="350" y="514" width="70" height="70"/>
@@ -158,6 +164,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="+15%"/>
+                                <connections>
+                                    <action selector="tapPlus15Button:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="eV0-xU-zRc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
